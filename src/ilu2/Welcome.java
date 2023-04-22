@@ -1,47 +1,80 @@
 package ilu2;
 
 public class Welcome {
-	public static StringBuilder construct(StringBuilder sb, String input) {
+	private static void constructLowercase(StringBuilder sb, String[] input) {
 		sb.append("Hello, ");
-		String[] splittedInput = input.split(",");
-		for(int i = 0 ; i<splittedInput.length ; i++) {
-			splittedInput[i] = splittedInput[i].trim();
-			if(!splittedInput[i].equals("")) {
-			splittedInput[i] = splittedInput[i].substring(0,1).toUpperCase() + splittedInput[i].substring(1);
+		for(int i = 0 ; i<input.length ; i++) {
+			input[i] = input[i].trim();
+			if(!input[i].equals("")) {
+			input[i] = input[i].substring(0,1).toUpperCase() + input[i].substring(1);
+			sb.append(input[i]);
 			}
-			sb.append(splittedInput[i]);
-			if(i!=(splittedInput.length-1)) {
+			if(i!=(input.length-1)) {
 			sb.append(", ");
 			}
 		}
-		return sb;
+	}
+	private static int lengthUp(String[] splittedInput) {
+		int j = 0;
+		for(int i = 0 ; i<splittedInput.length ; i++) {
+			if(splittedInput[i].equals(splittedInput[i].toUpperCase())) {
+				j++;
+			}
+		}
+		return j;
 	}
 	
-	public static StringBuilder constructMaj(StringBuilder sb, String input) {
-		sb.append("HELLO, ");
-		String[] splittedInput = input.split(",");
-		for(int i = 0 ; i<splittedInput.length ; i++) {
-			splittedInput[i] = splittedInput[i].trim();
-			if(!splittedInput[i].equals("")) {
-			splittedInput[i] = splittedInput[i].substring(0,1).toUpperCase() + splittedInput[i].substring(1);
+	private static void constructEffective(StringBuilder sb, String[] splittedInputLow, String[] splittedInputUp) {
+		if(splittedInputLow.length>0) {
+		constructLowercase(sb, splittedInputLow);
+		}
+		if(splittedInputUp.length >0) {
+			if(splittedInputLow.length >0) {
+		sb.append(". AND ");
 			}
-			sb.append(splittedInput[i]);
-			if(i!=(splittedInput.length-1)) {
+		constructMaj(sb, splittedInputUp);
+		}
+	}
+	
+	private static void construct(StringBuilder sb, String input) {
+		String[] splittedInput = input.split(",");
+		int lengthUp = lengthUp(splittedInput);
+		System.out.println(lengthUp);
+		String[] splittedInputLow = new String[splittedInput.length - lengthUp];
+		String[] splittedInputUp = new String[lengthUp];
+		int j = 0, k = 0;
+		for(int i = 0 ; i<splittedInput.length ; i++) {
+			if(!splittedInput[i].equals("")) {
+			if(splittedInput[i].equals(splittedInput[i].toUpperCase())) {
+				splittedInputUp[k] = splittedInput[i];
+				k++;
+			} else {
+				splittedInputLow[j] = splittedInput[i];
+				j++;
+			}
+			}
+		}
+		constructEffective(sb, splittedInputLow, splittedInputUp);
+	}
+	
+	private static void constructMaj(StringBuilder sb, String[] input) {
+		sb.append("HELLO, ");
+		for(int i = 0 ; i<input.length ; i++) {
+			input[i] = input[i].trim();
+			if(!input[i].equals("")) {
+			input[i] = input[i].substring(0,1).toUpperCase() + input[i].substring(1);
+			sb.append(input[i]);
+			}
+			if(i!=(input.length-1)) {
 			sb.append(", ");
 			}
 		}
 		sb.append(" !");
-		return sb;
 	}
 	public static String welcome(String input) {
 		StringBuilder sb = new StringBuilder();
 		if(input!=null && !input.trim().equals("")) {
-			if(!(input).equals(input.toUpperCase())) {
-				sb = construct(sb, input);
-			}
-			else {
-				sb = constructMaj(sb, input);
-			}
+			construct(sb, input);
 		}
 		else {
 			sb.append("Hello, my friend");

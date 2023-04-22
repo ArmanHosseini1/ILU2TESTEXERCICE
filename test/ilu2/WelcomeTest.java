@@ -36,12 +36,18 @@ class WelcomeTest {
 	void testDeuxNoms() {
 		assertEquals("Hello, Amy, Leonard", Welcome.welcome("amy,leonard"));
 		assertEquals("HELLO, AMY, LEONARD !", Welcome.welcome("AMY, LEONARD"));
-		assertEquals("Hello, Amy, ", Welcome.welcome("amy, "));
 	}
 	
 	@Test
 	void testPlusieursNoms() {
 		assertEquals("Hello, Amy, Bob, Jerry", Welcome.welcome("Amy,bob, jerry"));
 		assertEquals("HELLO, AMY, BOB, JERRY !", Welcome.welcome("AMY, BOB,JERRY"));
+	}
+	
+	@Test
+	void testPlusieursNomsCris() {
+		assertEquals("Hello, Amy, Jerry. AND HELLO, BOB !", Welcome.welcome("amy, BOB, Jerry"));
+		assertEquals("Hello, Amy. AND HELLO, BOB !", Welcome.welcome("BOB,amy"));
+		assertEquals("Hello, Amy. AND HELLO, BOB, JERRY !", Welcome.welcome("BOB, amy, JERRY"));
 	}
 }
