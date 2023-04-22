@@ -32,4 +32,10 @@ class WelcomeTest {
 		assertEquals("Hello, JERRY", Welcome.welcome("jERRY"));
 	}
 
+	@Test
+	void testDeuxNoms() {
+		assertEquals("Hello, Amy, Leonard", Welcome.welcome("amy,leonard"));
+		assertEquals("HELLO, AMY, LEONARD !", Welcome.welcome("AMY, LEONARD"));
+		assertEquals("Hello, Amy, ", Welcome.welcome("amy, "));
+	}
 }
