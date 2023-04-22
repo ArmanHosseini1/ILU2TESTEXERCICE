@@ -10,7 +10,7 @@ public class Welcome {
 			splittedInput[i] = splittedInput[i].substring(0,1).toUpperCase() + splittedInput[i].substring(1);
 			}
 			sb.append(splittedInput[i]);
-			if(i!=1 && splittedInput.length==2) {
+			if(i!=(splittedInput.length-1)) {
 			sb.append(", ");
 			}
 		}
@@ -26,7 +26,7 @@ public class Welcome {
 			splittedInput[i] = splittedInput[i].substring(0,1).toUpperCase() + splittedInput[i].substring(1);
 			}
 			sb.append(splittedInput[i]);
-			if(i!=1 && splittedInput.length == 2) {
+			if(i!=(splittedInput.length-1)) {
 			sb.append(", ");
 			}
 		}
