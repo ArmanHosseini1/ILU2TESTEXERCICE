@@ -3,16 +3,14 @@ package ilu2;
 public class Welcome {
 	private static void constructLowercase(StringBuilder sb, String[] input) {
 		sb.append("Hello, ");
-		for(int i = 0 ; i<input.length ; i++) {
-			input[i] = input[i].trim();
+		for(int i = 0 ; i<actualLength(input) ; i++) {
 			if(!input[i].equals("")) {
-				input[i] = input[i].substring(0,1).toUpperCase() + input[i].substring(1);
 				sb.append(input[i]);
 			}
-			if(i<(input.length-2)) {
+			if(i<(actualLength(input)-2)) {
 				sb.append(", ");
 			}
-			else if(i==(input.length)-2) {
+			else if(i==(actualLength(input)-2)) {
 				sb.append(" and ");
 			}
 		}
@@ -28,11 +26,11 @@ public class Welcome {
 	}
 	
 	private static void constructEffective(StringBuilder sb, String[] splittedInputLow, String[] splittedInputUp) {
-		if(splittedInputLow.length>0) {
-		constructLowercase(sb, splittedInputLow);
+		if(actualLength(splittedInputLow)>0) {
+			constructLowercase(sb, splittedInputLow);
 		}
-		if(splittedInputUp.length >0) {
-			if(splittedInputLow.length >0) {
+		if(actualLength(splittedInputUp) >0) {
+			if(actualLength(splittedInputLow) >0) {
 		sb.append(". AND ");
 			}
 		constructMaj(sb, splittedInputUp);
@@ -47,28 +45,74 @@ public class Welcome {
 		int j = 0, k = 0;
 		for(int i = 0 ; i<splittedInput.length ; i++) {
 			if(splittedInput[i].equals(splittedInput[i].toUpperCase())) {
-				splittedInputUp[k] = splittedInput[i];
+				splittedInputUp[k] = splittedInput[i].trim();
 				k++;
 			} else {
-				splittedInputLow[j] = splittedInput[i];
+				splittedInputLow[j] = splittedInput[i].trim();
+				if(!splittedInputLow[j].equals("")) 
+					splittedInputLow[j] = splittedInputLow[j].substring(0,1).toUpperCase() + splittedInputLow[j].substring(1);
 				j++;
 			}
 		}
+		splittedInputLow = constructNumeration(splittedInputLow);
+		splittedInputUp = constructNumeration(splittedInputUp);
 		constructEffective(sb, splittedInputLow, splittedInputUp);
 	}
 	
+	private static String[] constructNumeration(String[] input) {
+		String[] inputSansDoublon = new String[input.length];
+		int[] numeration = new int[input.length];
+		int compteur = 0;
+		boolean toFind = false;
+		for(int i = 0 ; i<input.length ; i++) {
+			toFind = false;
+			for(int j = 0 ; j<compteur ; j++) {
+				if(inputSansDoublon[j].equals(input[i])) {
+					numeration[j] ++;
+					toFind = true;
+			}
+			}
+			if(!toFind) {
+				inputSansDoublon[compteur] = input[i];
+				numeration[compteur] = 1;
+				compteur++;
+			}
+		}
+		return constructMerge(inputSansDoublon, numeration);
+	}
+	
+	private static String[] constructMerge(String[] inputSansDoublon, int[] numeration) {
+		for(int i = 0 ; i<actualLength(inputSansDoublon) ; i++) {
+			if(numeration[i] != 1) {
+				StringBuilder tempString = new StringBuilder();
+				tempString.append(inputSansDoublon[i]);
+				tempString.append(" (*");
+				tempString.append(numeration[i]);
+				tempString.append(")");
+				inputSansDoublon[i] = tempString.toString();
+			}
+		}
+		return inputSansDoublon;
+	}
+	
+	private static int actualLength(String[] input) {
+		int length = 0;
+		for(int i = 0 ; i<input.length ; i++) {
+			if(input[i]!=null)
+				length++;
+		}
+		return length;
+	}
 	private static void constructMaj(StringBuilder sb, String[] input) {
 		sb.append("HELLO, ");
-		for(int i = 0 ; i<input.length ; i++) {
-			input[i] = input[i].trim();
+		for(int i = 0 ; i<actualLength(input) ; i++) {
 			if(!input[i].equals("")) {
-				input[i] = input[i].substring(0,1).toUpperCase() + input[i].substring(1);
 				sb.append(input[i]);
 			}
-			if(i<(input.length-2)) {
+			if(i<(actualLength(input)-2)) {
 				sb.append(", ");
 			}
-			else if(i == (input.length - 2)) {
+			else if(i == (actualLength(input) - 2)) {
 				sb.append(" AND ");
 			}
 			}

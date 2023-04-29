@@ -66,4 +66,11 @@ class WelcomeTest {
 		assertEquals("Hello, Bob", Welcome.welcome("   bob  "));
 		assertEquals("HELLO, AMY !", Welcome.welcome("  AMY  "));
 	}
+	
+	@Test
+	void testNumération() {
+		assertEquals("Hello, Bob (*3) and Amy. AND HELLO, JERRY (*2) !", Welcome.welcome("bob, JERRY, amy, bob, JERRY, bob"));
+		assertEquals("Hello, Bob (*3), AMy and Amy", Welcome.welcome("bob, bob, Bob, aMy, Amy"));
+		assertEquals("HELLO, AMY (*2) AND JERRY !", Welcome.welcome("AMY, JERRY, AMY"));
+	}
 }
