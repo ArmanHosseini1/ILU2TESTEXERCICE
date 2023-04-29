@@ -34,20 +34,28 @@ class WelcomeTest {
 
 	@Test
 	void testDeuxNoms() {
-		assertEquals("Hello, Amy, Leonard", Welcome.welcome("amy,leonard"));
-		assertEquals("HELLO, AMY, LEONARD !", Welcome.welcome("AMY, LEONARD"));
+		assertEquals("Hello, Amy and Leonard", Welcome.welcome("amy,leonard"));
+		assertEquals("HELLO, AMY AND LEONARD !", Welcome.welcome("AMY, LEONARD"));
 	}
 	
 	@Test
 	void testPlusieursNoms() {
-		assertEquals("Hello, Amy, Bob, Jerry", Welcome.welcome("Amy,bob, jerry"));
-		assertEquals("HELLO, AMY, BOB, JERRY !", Welcome.welcome("AMY, BOB,JERRY"));
+		assertEquals("Hello, Amy, Bob and Jerry", Welcome.welcome("Amy,bob, jerry"));
+		assertEquals("HELLO, AMY, BOB AND JERRY !", Welcome.welcome("AMY, BOB,JERRY"));
 	}
 	
 	@Test
 	void testPlusieursNomsCris() {
-		assertEquals("Hello, Amy, Jerry. AND HELLO, BOB !", Welcome.welcome("amy, BOB, Jerry"));
+		assertEquals("Hello, Amy and Jerry. AND HELLO, BOB !", Welcome.welcome("amy, BOB, Jerry"));
 		assertEquals("Hello, Amy. AND HELLO, BOB !", Welcome.welcome("BOB,amy"));
-		assertEquals("Hello, Amy. AND HELLO, BOB, JERRY !", Welcome.welcome("BOB, amy, JERRY"));
+		assertEquals("Hello, Amy. AND HELLO, BOB AND JERRY !", Welcome.welcome("BOB, amy, JERRY"));
+	}
+	
+	@Test
+	void testAndPourLeDernierNom() {
+		assertEquals("Hello, Bob, Amy and Jerry", Welcome.welcome("bob, Amy, jerry"));
+		assertEquals("Hello, Bob. AND HELLO, AMY AND JERRY !", Welcome.welcome("bob, AMY, JERRY"));
+		assertEquals("Hello, Bob and Amy. AND HELLO, JERRY !", Welcome.welcome("bob, Amy, JERRY"));
+		assertEquals("Hello, Bob and Amy. AND HELLO, JERRY AND JACK !", Welcome.welcome("bob, JERRY, JACK, amy"));
 	}
 }

@@ -6,11 +6,14 @@ public class Welcome {
 		for(int i = 0 ; i<input.length ; i++) {
 			input[i] = input[i].trim();
 			if(!input[i].equals("")) {
-			input[i] = input[i].substring(0,1).toUpperCase() + input[i].substring(1);
-			sb.append(input[i]);
+				input[i] = input[i].substring(0,1).toUpperCase() + input[i].substring(1);
+				sb.append(input[i]);
 			}
-			if(i!=(input.length-1)) {
-			sb.append(", ");
+			if(i<(input.length-2)) {
+				sb.append(", ");
+			}
+			else if(i==(input.length)-2) {
+				sb.append(" and ");
 			}
 		}
 	}
@@ -39,19 +42,16 @@ public class Welcome {
 	private static void construct(StringBuilder sb, String input) {
 		String[] splittedInput = input.split(",");
 		int lengthUp = lengthUp(splittedInput);
-		System.out.println(lengthUp);
 		String[] splittedInputLow = new String[splittedInput.length - lengthUp];
 		String[] splittedInputUp = new String[lengthUp];
 		int j = 0, k = 0;
 		for(int i = 0 ; i<splittedInput.length ; i++) {
-			if(!splittedInput[i].equals("")) {
 			if(splittedInput[i].equals(splittedInput[i].toUpperCase())) {
 				splittedInputUp[k] = splittedInput[i];
 				k++;
 			} else {
 				splittedInputLow[j] = splittedInput[i];
 				j++;
-			}
 			}
 		}
 		constructEffective(sb, splittedInputLow, splittedInputUp);
@@ -62,13 +62,16 @@ public class Welcome {
 		for(int i = 0 ; i<input.length ; i++) {
 			input[i] = input[i].trim();
 			if(!input[i].equals("")) {
-			input[i] = input[i].substring(0,1).toUpperCase() + input[i].substring(1);
-			sb.append(input[i]);
+				input[i] = input[i].substring(0,1).toUpperCase() + input[i].substring(1);
+				sb.append(input[i]);
 			}
-			if(i!=(input.length-1)) {
-			sb.append(", ");
+			if(i<(input.length-2)) {
+				sb.append(", ");
 			}
-		}
+			else if(i == (input.length - 2)) {
+				sb.append(" AND ");
+			}
+			}
 		sb.append(" !");
 	}
 	public static String welcome(String input) {
